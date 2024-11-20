@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:login_signup_app/src/cart/controller/cart_controller.dart';
 import 'package:login_signup_app/src/cart/views/cart_screen.dart';
 import 'package:login_signup_app/src/product/views/shirts_screen.dart';
 import 'package:login_signup_app/src/user/views/profilepage.dart';
@@ -20,10 +20,12 @@ class _HomeScreenState extends State<HomeScreen> {
   //   }
   // }
   int currentPage = 0;
+  final cartManager = CartController();
   @override
   Widget build(BuildContext context) {
-
-    List<Widget> pages = const [Homepage(),Cartpage(),Profilepage()];
+    List<Widget> pages =  [ Homepage(
+        cartManager: cartManager,
+      ), Cartpage(cartManager: cartManager,),const Profilepage()];
     return SafeArea(
       child: Scaffold(
         body: IndexedStack(
@@ -34,7 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
             BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.person_4_sharp), label: ""),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_4_sharp), label: ""),
           ],
           iconSize: 32,
           currentIndex: currentPage,
@@ -43,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               currentPage = val;
             });
           },
-          unselectedItemColor:const Color.fromARGB(255, 56, 53, 53),
+          unselectedItemColor: const Color.fromARGB(255, 56, 53, 53),
           selectedFontSize: 0,
           unselectedFontSize: 0,
         ),
