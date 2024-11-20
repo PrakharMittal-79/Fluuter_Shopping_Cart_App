@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:login_signup_app/src/authentication/controller/cart_provider.dart';
+import 'package:login_signup_app/src/cart/controller/cart_controller.dart';
 import 'package:login_signup_app/src/home/constants/constraints.dart';
 import 'package:login_signup_app/src/home/views/home_screen.dart';
 import 'package:login_signup_app/src/authentication/views/welcome_screen.dart';

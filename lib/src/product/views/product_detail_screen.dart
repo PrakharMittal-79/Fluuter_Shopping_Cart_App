@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:login_signup_app/src/authentication/controller/cart_provider.dart';
+import 'package:login_signup_app/src/cart/controller/cart_controller.dart';
+import 'package:login_signup_app/src/cart/model/cart_model.dart';
 import 'package:login_signup_app/src/home/constants/constraints.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
   final Map<String, dynamic> product;
-  const ProductDetails({super.key, required this.product});
+  final CartController cartManager;
+  const ProductDetails(
+      {super.key, required this.product, required this.cartManager});
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -21,16 +24,19 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   addProduct() {
     if (size != -1) {
-      Provider.of<CartProvider>(context, listen: false).addToCart({
-        'id': widget.product['id'],
-        'title': widget.product['title'],
-        'price': widget.product['price'],
-        'image_url': widget.product['image_url'],
-        'brand': widget.product['brand'],
-        'size': widget.product['size'][size] as String,
-      });
+      // Provider.of<CartProvider>(context, listen: false).addToCart({
+      //   'id': widget.product['id'],
+      //   'title': widget.product['title'],
+      //   'price': widget.product['price'],
+      //   'image_url': widget.product['image_url'],
+      //   'brand': widget.product['brand'],
+      //   'size': widget.product['size'][size] as String,
+      // });
+      widget.cartManager.addToCart(CartItem(id: widget.product['id'].toString() , title: widget.product['title'], imageUrl: widget.product['image_url'] as String, price: widget.product['price'] as int,));
+
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Product Added Successfully!")));
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Please select size first!")));

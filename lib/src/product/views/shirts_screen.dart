@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:login_signup_app/src/cart/controller/cart_controller.dart';
 import 'package:login_signup_app/src/product/constants/product_shirt_data.dart';
 import 'package:login_signup_app/src/product/widgets/item_card.dart';
 import 'package:login_signup_app/src/product/views/product_detail_screen.dart';
 import 'package:login_signup_app/src/product/services/shirt_services.dart';
 
 class Homepage extends StatefulWidget {
-  const Homepage({super.key});
-
+  final CartController cartManager;
+  const Homepage({super.key, required this.cartManager});
   @override
   State<Homepage> createState() => _MyWidgetState();
 }
@@ -112,28 +113,27 @@ class _MyWidgetState extends State<Homepage> {
               return Expanded(
                 child: GridView.builder(
                     itemCount: shirts.length,
-                    padding:const EdgeInsets.all(8),
-                    gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 3,
-                        mainAxisSpacing: 8,
-                        childAspectRatio: 0.55
-                        ),
+                    padding: const EdgeInsets.all(8),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 3,
+                            mainAxisSpacing: 8,
+                            childAspectRatio: 0.55),
                     itemBuilder: (context, i) {
                       return GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    ProductDetails(product: shirts[i])));
-                          },
-                          child: ItemCard(
-                              title: shirts[i]['title'] as String,
-                              brand: shirts[i]['brand'] as String,
-                              price: shirts[i]['price'],
-                              discountedPrice: shirts[i]['discounted_price'],
-                              image: shirts[i]['image_url'] as String,
-                              index: i),
-
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  ProductDetails(product: shirts[i],cartManager: widget.cartManager,)));
+                        },
+                        child: ItemCard(
+                            title: shirts[i]['title'] as String,
+                            brand: shirts[i]['brand'] as String,
+                            price: shirts[i]['price'],
+                            discountedPrice: shirts[i]['discounted_price'],
+                            image: shirts[i]['image_url'] as String,
+                            index: i),
                       );
                     }),
               );
